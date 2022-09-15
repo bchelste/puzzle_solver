@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:04:35 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/15 19:36:02 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/15 20:14:22 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ class PuzzleData
 		// std::pair<int, int>		findTile(int &tile);
 		// void					swapTiles(std::pair<int, int> &p1, std::pair<int, int> &p2);
 
-		int						getPuzzleSize();
-		std::vector<int>		getTiles();
+		int						getPuzzleSize() const;
+		std::vector<int>		getTiles() const;
 
 	private:
 	
@@ -36,4 +36,4 @@ class PuzzleData
 
 };
 
-std::ostream& operator<<(std::ostream &stream, PuzzleData &puzzle);
+std::ostream& operator<<(std::ostream &stream, const PuzzleData &puzzle);

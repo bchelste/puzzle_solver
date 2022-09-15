@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:29:03 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/15 19:55:11 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/15 23:07:53 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ Puzzle *cmdParser(int argc, char **argv)
 				std::string res = std::string(argv[i]);
 				if ((res == "default") || (res == "uniform") || (res == "greedy"))
 				{
-					heuristic = res;
+					search = res;
 				}
 				else
 				{
@@ -290,12 +290,10 @@ int main(int argc, char **argv)
 		exit(1);
 	}
 
-	// std::cout << puzzle << std::endl;
-
 	std::cout << "--data from input--" << std::endl;
 	std::cout << "heuristic type: " << (*puzzle).getHeuristic() << std::endl;
 	std::cout << "search type: " << (*puzzle).getSearch() << std::endl;
-	std::cout << "puzzle data: " << (*puzzle).getPuzzle() << std::endl;
+	std::cout << "puzzle data: \n" << (*puzzle).getPuzzle() << std::endl;
 	
 	delete puzzle;
 	

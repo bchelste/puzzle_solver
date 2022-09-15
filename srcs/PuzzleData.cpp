@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:04:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/15 16:09:06 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/15 23:10:03 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@ PuzzleData::~PuzzleData()
 
 // }
 
-int PuzzleData::getPuzzleSize()
+int PuzzleData::getPuzzleSize() const
 {
 	return (this->puzzleSize);
 }
 
-std::vector<int> PuzzleData::getTiles()
+std::vector<int> PuzzleData::getTiles() const
 {
 	return (this->tiles);	
 }
 
-std::ostream& operator<<(std::ostream &stream, PuzzleData &puzzle)
+std::ostream& operator<<(std::ostream &stream, const PuzzleData &puzzle)
 {
 	int n = puzzle.getPuzzleSize();
 	std::vector<int> tmp = puzzle.getTiles();
@@ -55,6 +55,8 @@ std::ostream& operator<<(std::ostream &stream, PuzzleData &puzzle)
 		cntr += 1;
 		if (cntr == n)
 		{
+			if (it == (tmp.end() - 1))
+				break ;
 			stream << std::endl;
 			cntr = 0;
 		}
