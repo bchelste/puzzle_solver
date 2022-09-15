@@ -6,13 +6,62 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:04:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/15 00:41:32 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/15 16:09:06 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PuzzleData.hpp"
 
-PuzzleData::PuzzleData(int &size, std::string &newHeuristic, std::vector<int> &newTiles) : puzzleSize(size), heuristic(newHeuristic), tiles(newTiles)
+PuzzleData::PuzzleData(int &size, std::vector<int> &newTiles) : puzzleSize(size), tiles(newTiles)
 {
 
+}
+
+PuzzleData::~PuzzleData()
+{
+	
+}
+
+// std::pair<int, int> PuzzleData::findTile(int &tile)
+// {
+	
+// }
+
+// void PuzzleData::swapTiles(std::pair<int, int> &p1, std::pair<int, int> &p2)
+// {
+
+// }
+
+int PuzzleData::getPuzzleSize()
+{
+	return (this->puzzleSize);
+}
+
+std::vector<int> PuzzleData::getTiles()
+{
+	return (this->tiles);	
+}
+
+std::ostream& operator<<(std::ostream &stream, PuzzleData &puzzle)
+{
+	int n = puzzle.getPuzzleSize();
+	std::vector<int> tmp = puzzle.getTiles();
+	int cntr = 0;
+	std::vector<int>::iterator it = tmp.begin();
+
+	for (; it != tmp.end(); ++it)
+	{
+		stream << *it;
+		cntr += 1;
+		if (cntr == n)
+		{
+			stream << std::endl;
+			cntr = 0;
+		}
+		else
+		{
+			stream << " ";
+		}
+	}
+	return (stream);
 }
