@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:29:03 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/15 23:07:53 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/16 14:45:09 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #include <fcntl.h>
 #include <vector>
 #include <string>
-# include <ctime>
-# include <unistd.h>
+#include <ctime>
+#include <unistd.h>
 
 #include <PuzzleData.hpp>
 #include <Puzzle.hpp>
@@ -295,6 +295,6 @@ int main(int argc, char **argv)
 	std::cout << "search type: " << (*puzzle).getSearch() << std::endl;
 	std::cout << "puzzle data: \n" << (*puzzle).getPuzzle() << std::endl;
 	
-	delete puzzle;
 	
+	delete puzzle;
 }
