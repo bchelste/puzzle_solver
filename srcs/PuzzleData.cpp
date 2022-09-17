@@ -6,11 +6,17 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:04:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/15 23:10:03 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/17 20:50:22 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PuzzleData.hpp"
+
+PuzzleData::PuzzleData()
+{
+	this->puzzleSize = 0;
+	this->tiles = std::vector<int>();
+}
 
 PuzzleData::PuzzleData(int &size, std::vector<int> &newTiles) : puzzleSize(size), tiles(newTiles)
 {
@@ -62,7 +68,12 @@ std::ostream& operator<<(std::ostream &stream, const PuzzleData &puzzle)
 		}
 		else
 		{
-			stream << " ";
+			if (*it < 10)
+				stream << "   ";
+			else if ((*it >= 10) &&  (*it < 99))
+				stream << "  ";
+			else
+				stream << " ";
 		}
 	}
 	return (stream);
