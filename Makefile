@@ -6,7 +6,7 @@
 #    By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/11 20:13:55 by bchelste          #+#    #+#              #
-#    Updated: 2022/09/17 20:27:53 by bchelste         ###   ########.fr        #
+#    Updated: 2022/09/18 13:22:43 by bchelste         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ CC			=	clang++
 SRCS		=	$(SRC_DIR)/main.cpp \
 				$(SRC_DIR)/Parser.cpp \
 				$(SRC_DIR)/Puzzle.cpp \
-				$(SRC_DIR)/PuzzleData.cpp 
+				$(SRC_DIR)/PuzzleData.cpp  \
+				$(SRC_DIR)/Solver.cpp 
 				
 OBJS		=	$(SRCS:.cpp=.o)
 
@@ -26,9 +27,10 @@ INC			=	-I$(INC_DIR)
 
 HEAD		=	$(INC_DIR)/Parser.hpp \
 				$(INC_DIR)/Puzzle.hpp \
-				$(INC_DIR)/PuzzleData.hpp
+				$(INC_DIR)/PuzzleData.hpp \
+				$(INC_DIR)/Solver.hpp
 
-CFLAGS		=	-Wextra -Werror -Wall $(INC)
+CFLAGS		=	-Wextra -Werror -Wall $(INC) -std=c++11
 
 OPTFLAGS	=	-O0
 

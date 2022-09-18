@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:29:03 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/17 21:21:17 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/18 13:17:28 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@
 #include <ctime>
 #include <unistd.h>
 
-#include "Parser.hpp"
+
 #include "PuzzleData.hpp"
+#include "Parser.hpp"
+#include "Solver.hpp"
 #include "Puzzle.hpp"
 
 int main(int argc, char **argv)
@@ -40,6 +42,5 @@ int main(int argc, char **argv)
 	std::cout << "search type: " << (puzzle).getSearch() << std::endl;
 	std::cout << "puzzle data: \n" << (puzzle).getPuzzle() << std::endl;
 	
-	
-	
+	puzzle.solvePuzzle();
 }

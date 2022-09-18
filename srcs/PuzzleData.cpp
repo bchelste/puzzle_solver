@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:04:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/17 20:50:22 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/18 02:31:49 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ std::ostream& operator<<(std::ostream &stream, const PuzzleData &puzzle)
 		{
 			if (*it < 10)
 				stream << "   ";
-			else if ((*it >= 10) &&  (*it < 99))
+			else if ((*it >= 10) &&  (*it <= 99))
 				stream << "  ";
 			else
 				stream << " ";
