@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:29:03 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/18 13:17:28 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/18 18:07:25 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int main(int argc, char **argv)
 		exit(1);
 	}
 
-	std::cout << "--data from input--" << std::endl;
-	std::cout << "heuristic type: " << (puzzle).getHeuristic() << std::endl;
-	std::cout << "search type: " << (puzzle).getSearch() << std::endl;
-	std::cout << "puzzle data: \n" << (puzzle).getPuzzle() << std::endl;
+	// std::cout << "--data from input--" << std::endl;
+	// std::cout << "heuristic type: " << (puzzle).getHeuristic() << std::endl;
+	// std::cout << "search type: " << (puzzle).getSearch() << std::endl;
+	// std::cout << "puzzle data: \n" << (puzzle).getPuzzle() << std::endl;
 	
 	puzzle.solvePuzzle();
 }

@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 20:19:47 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/18 17:13:25 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/18 18:09:07 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,14 @@ void Puzzle::solvePuzzle()
 {
 	solver->setInitialState(this->puzzle.getTiles(), this->puzzle.getPuzzleSize());
 	
-	std::cout << "initialState" << std::endl;
-	printState(solver->initialState);
+	// std::cout << "initialState" << std::endl;
+	// printState(solver->initialState);
 	
 	solver->setGoalState();
 	
-	std::cout << "-------" << std::endl;
-	std::cout << "goalState" << std::endl;
-	printState(solver->goalState);
+	// std::cout << "-------" << std::endl;
+	// std::cout << "goalState" << std::endl;
+	// printState(solver->goalState);
 
 	// std::cout << solver->countInversion() << std::endl;
 
@@ -135,8 +135,10 @@ void Puzzle::printSolution(std::string sStatus)
 	std::cout << "----- N-PUZZLE -----" << std::endl;
 	std::cout << "initial State:" << std::endl;
 	printState(solver->initialState);
+	std::cout << std::endl;
 	std::cout << "goal State:" << std::endl;
 	printState(solver->goalState);
+	std::cout << std::endl;
 	std::cout << sStatus << std::endl;
 
 	

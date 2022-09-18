@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/18 17:27:11 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/18 18:06:58 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,14 +123,17 @@ bool Solver::isSolvable()
 	else if (nSize % 2 == 0)
 	{
 		int tmp = initialState[0] % nSize;
-		std::cout << "tmp = " << tmp << std::endl;
+		// std::cout << "initialState[0] = " << initialState[0] << std::endl;
+		// std::cout << "tmp = " << tmp << std::endl;
+		// std::cout << "inversions = " << inversions << std::endl;
+		// std::cout << "(tmp % 2) = " << (tmp % 2) << std::endl;
 		if ((tmp % 2) == 0)
 		{
-			result = inversions % 2 == 0;
+			result = inversions % 2 != 0;
 		}
 		else
 		{
-			result = inversions % 2 != 0;
+			result = inversions % 2 == 0;
 		}
 		
 	}

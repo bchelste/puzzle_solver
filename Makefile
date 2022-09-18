@@ -6,7 +6,7 @@
 #    By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/11 20:13:55 by bchelste          #+#    #+#              #
-#    Updated: 2022/09/18 13:22:43 by bchelste         ###   ########.fr        #
+#    Updated: 2022/09/18 17:31:28 by bchelste         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ clean:
 fclean: clean 
 	$(RM) $(NAME)
 	$(RM) puzzle3.puzzle
+	$(RM) puzzle4.puzzle
 
 re: fclean all
 
@@ -60,6 +61,12 @@ gen3s:
 
 gen3u:
 	python3 ./additional/npuzzle_gen.py 3 -u > puzzle3.puzzle
+
+gen4s:
+	python3 ./additional/npuzzle_gen.py 4 -s > puzzle4.puzzle
+
+gen4u:
+	python3 ./additional/npuzzle_gen.py 4 -u > puzzle4.puzzle
 
 %.o:%.cpp $(HEAD)
 	$(CC) $(CFLAGS) $(OPTFLAGS) -c $< -o $@
