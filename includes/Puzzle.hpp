@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 20:19:42 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/18 13:30:16 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/18 14:23:10 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ class Puzzle
 		Solver					*solver;
 
 		void					printState(std::map<int, int> &state);
-		// void					printSolution();
+		void					printSolution(std::string sState);
+
+		// void					solve();
 		
 };

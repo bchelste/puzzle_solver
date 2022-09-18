@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/18 13:32:44 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/18 14:24:25 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,7 @@ void Solver::setGoalState()
 
 void Solver::findSolution(std::string &heuristic, std::string &search)
 {
-
 	std::cout << heuristic << search << std::endl;
-	
-	// if (isSolvable() == false)
-	// {
-	// 	printer.printSolution(this, "unsolvable");
-	// 	return ;
-	// }
-
 }
 
 // private methods ************************************************************
@@ -93,3 +85,14 @@ int Solver::countInversion()
 
 	return (inversions);
 }
+
+// bool Solver::isSolvable()
+// {
+// 	int inversions = countInversion();
+
+// 	if (nSize % 2 == 1)
+// 		return (inversions % 2 == 0);
+	
+	
+	
+// }

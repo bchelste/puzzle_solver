@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:34 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/18 13:25:47 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/18 14:24:18 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,9 @@ class Solver
 		unsigned long			states;
 		// int						moves;
 
-		// void					printState(std::map<int, int> &state);
-		// void					printSolution();
-		
 		void					increaseNbr(int *nbr);
 		int						countInversion();
 		
-		bool					isSolvable();
+		// bool					isSolvable();
 
 };

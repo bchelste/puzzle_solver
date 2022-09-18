@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 20:19:47 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/18 13:33:22 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/18 14:23:45 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,20 @@ void Puzzle::solvePuzzle()
 	std::cout << "-------" << std::endl;
 	std::cout << "goalState" << std::endl;
 	printState(solver->goalState);
-	// solver->findSolution(this->heuristic, this->search);
+
+	// solve();
 }
+
+// void Puzzle::solve()
+// {
+// 	if (solver->isSolvable() == false)
+// 	{
+// 		printSolution("unsolvable");
+// 		return ;
+// 	}
+// 	solver->findSolution(heuristic, search);
+// 	printSolution("solvable");
+// }
 
 void Puzzle::printState(std::map<int, int> &state)
 {
@@ -105,7 +117,14 @@ void Puzzle::printState(std::map<int, int> &state)
 	std::cout << std::endl;
 }
 
-// void Puzzle::printSolution()
-// {
-			
-// }
+void Puzzle::printSolution(std::string sStatus)
+{
+	std::cout << "----- N-PUZZLE -----" << std::endl;
+	std::cout << "initial State:" << std::endl;
+	printState(solver->initialState);
+	std::cout << "goal State:" << std::endl;
+	printState(solver->goalState);
+	std::cout << sStatus << std::endl;
+
+	
+}
