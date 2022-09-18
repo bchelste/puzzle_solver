@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:34 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/18 14:24:18 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/18 17:13:01 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,6 @@ class Solver
 		void					increaseNbr(int *nbr);
 		int						countInversion();
 		
-		// bool					isSolvable();
+		bool					isSolvable();
 
 };

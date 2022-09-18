@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 20:19:47 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/18 14:23:45 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/18 17:13:25 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,21 @@ void Puzzle::solvePuzzle()
 	std::cout << "goalState" << std::endl;
 	printState(solver->goalState);
 
-	// solve();
+	// std::cout << solver->countInversion() << std::endl;
+
+	solve();
 }
 
-// void Puzzle::solve()
-// {
-// 	if (solver->isSolvable() == false)
-// 	{
-// 		printSolution("unsolvable");
-// 		return ;
-// 	}
-// 	solver->findSolution(heuristic, search);
-// 	printSolution("solvable");
-// }
+void Puzzle::solve()
+{
+	if (solver->isSolvable() == false)
+	{
+		printSolution("unsolvable");
+		return ;
+	}
+	solver->findSolution(heuristic, search);
+	printSolution("solvable");
+}
 
 void Puzzle::printState(std::map<int, int> &state)
 {
@@ -91,9 +93,20 @@ void Puzzle::printState(std::map<int, int> &state)
 	int cntr = 0;
 	int i = 0;
 	int tmp;
+
+	std::map<int, int>::iterator it;
+	
 	for (; i < (size * size); ++i)
 	{
-		tmp = state.at(i);
+		// tmp = state.at(i);
+		
+		it = state.begin();
+		for (; it != state.end(); ++it)
+		{
+			if (i == it->second)
+				tmp = it->first;
+		}
+		
 		std::cout << tmp;
 		cntr += 1;
 		if (cntr == size)
