@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:04:35 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/17 19:14:32 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/18 22:05:36 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ class PuzzleData
 		PuzzleData();
 		PuzzleData(int &newSize,  std::vector<int> &newTiles);
 		virtual ~PuzzleData();
-
-		// std::pair<int, int>		findTile(int &tile);
-		// void					swapTiles(std::pair<int, int> &p1, std::pair<int, int> &p2);
 
 		int						getPuzzleSize() const;
 		std::vector<int>		getTiles() const;

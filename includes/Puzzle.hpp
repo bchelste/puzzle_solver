@@ -6,15 +6,18 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 20:19:42 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/18 17:24:24 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:22:11 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+#include <queue>
+
 #include "PuzzleData.hpp"
 #include "Parser.hpp"
 #include "Solver.hpp"
+#include "State.hpp"
 
 class Solver;
 
@@ -46,5 +49,9 @@ class Puzzle
 		void					printSolution(std::string sState);
 
 		void					solve();
+
+		void					manhattanHeuristic(State *state);
+		void					euclidianHeuristic(State *state);
+		void					hammingHeuristic(State *state);
 		
 };

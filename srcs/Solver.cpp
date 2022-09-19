@@ -6,13 +6,13 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/18 18:06:58 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:19:02 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Solver.hpp"
 
-Solver::Solver() : nSize(0), states(0)
+Solver::Solver(Puzzle *_puzzle) : puzzle(_puzzle), nSize(0), states(0), heuristicFunc(NULL)
 {
 	
 }
@@ -65,9 +65,27 @@ void Solver::setGoalState()
 	
 }
 
-void Solver::findSolution(std::string &heuristic, std::string &search)
-{
-	std::cout << heuristic << search << std::endl;
+void Solver::findSolution(void (Puzzle::*heuristic)(State*), std::string &search)
+{	
+	CompareStates comp = CompareStates(search);
+	heuristicFunc = heuristic;
+	opened = std::priority_queue<State*, std::vector<State*>, CompareStates>(comp);
+	closed.clear();
+	State *start = new State();
+	start->state = initialState;
+	start->father = NULL;
+	start->g = 0;
+	start->h = 0;
+	(puzzle->*heuristicFunc)(start);
+	start->movedTile = -1;
+	opened.push(start);
+	
+
+	std::cout << "Hello" << std::endl;
+	
+	std::cout << opened.top()->h << std::endl;
+	std::cout << opened.top()->state.size() << std::endl;
+	
 }
 
 // private methods ************************************************************
@@ -139,4 +157,38 @@ bool Solver::isSolvable()
 	}
 	
 	return (result);
+}
+
+// State *Solver::generateNewStates(State *parent)
+// {
+	
+// }
+
+// moves **********************************************************************
+
+// void Solver::moveRight(State *state)
+// {
+// 	std::cout << "move right" << std::endl;
+// }
+
+// void Solver::moveDown(State *state)
+// {
+	
+// }
+
+// void Solver::moveLeft(State *state)
+// {
+	
+// }
+
+// void Solver::moveUp(State *state)
+// {
+	
+// }
+
+bool Solver::isSolved(State *current)
+{
+	if (current->state == goalState)
+		return (true);
+	return (false);
 }

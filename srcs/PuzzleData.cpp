@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:04:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/18 02:31:49 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/18 22:05:22 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,6 @@ PuzzleData::~PuzzleData()
 {
 	
 }
-
-// std::pair<int, int> PuzzleData::findTile(int &tile)
-// {
-	
-// }
-
-// void PuzzleData::swapTiles(std::pair<int, int> &p1, std::pair<int, int> &p2)
-// {
-
-// }
 
 int PuzzleData::getPuzzleSize() const
 {

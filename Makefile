@@ -6,7 +6,7 @@
 #    By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/11 20:13:55 by bchelste          #+#    #+#              #
-#    Updated: 2022/09/18 17:31:28 by bchelste         ###   ########.fr        #
+#    Updated: 2022/09/19 00:20:16 by bchelste         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ INC			=	-I$(INC_DIR)
 HEAD		=	$(INC_DIR)/Parser.hpp \
 				$(INC_DIR)/Puzzle.hpp \
 				$(INC_DIR)/PuzzleData.hpp \
-				$(INC_DIR)/Solver.hpp
+				$(INC_DIR)/Solver.hpp \
+				$(INC_DIR)/State.hpp \
 
 CFLAGS		=	-Wextra -Werror -Wall $(INC) -std=c++11
 

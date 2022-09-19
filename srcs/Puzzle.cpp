@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 20:19:47 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/18 18:09:07 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:21:41 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ Puzzle::Puzzle()
 	this->search = "";
 	this->puzzle = PuzzleData();
 	this->parser = Parser();
-	this->solver = new Solver();
+	this->solver = new Solver(this);
 }
 
 Puzzle::Puzzle(PuzzleData &newPuzzle, std::string &heuristicType, std::string &searchType) : 
@@ -72,7 +72,7 @@ void Puzzle::solvePuzzle()
 	// printState(solver->goalState);
 
 	// std::cout << solver->countInversion() << std::endl;
-
+	
 	solve();
 }
 
@@ -83,7 +83,15 @@ void Puzzle::solve()
 		printSolution("unsolvable");
 		return ;
 	}
-	solver->findSolution(heuristic, search);
+	
+	void (Puzzle::*heuristicFunc)(State *state);
+	if (heuristic == "manhtn")
+		heuristicFunc = &Puzzle::manhattanHeuristic;
+	else if (heuristic == "euclid")
+		heuristicFunc = &Puzzle::euclidianHeuristic;
+	else
+		heuristicFunc = &Puzzle::hammingHeuristic;	
+	solver->findSolution(heuristicFunc, search);
 	printSolution("solvable");
 }
 
@@ -142,4 +150,52 @@ void Puzzle::printSolution(std::string sStatus)
 	std::cout << sStatus << std::endl;
 
 	
+}
+
+// heuristic funcs ************************************************************
+
+void	Puzzle::manhattanHeuristic(State *state)
+{
+	int heuristic = 0; 
+	int current = 0;
+	unsigned long i = 1; 
+	unsigned long size = puzzle.getPuzzleSize();
+	if(state->father == NULL)
+	{
+		for (; i < (size * size); ++i)
+		{
+			// std::cout << "i = " << i << std::endl;
+			// std::cout << "current pos = " << state->state.at(i) << std::endl;
+			// std::cout << "goal pos = " << solver->goalState.at(i) << std::endl;
+			current = abs(state->state.at(i) - solver->goalState.at(i));
+			// std::cout << current << std::endl;
+			// std::cout << (current / size) << "+" << (current % size) << std::endl;
+			heuristic += ((current / size) + (current % size));
+			// std::cout << "--------------"<< std::endl;
+			state->h = heuristic;
+			state->f = heuristic;
+		}
+	}
+	else 
+	{
+		heuristic = state->h;
+		state->f -= heuristic;
+		current = abs(state->father->state.at(state->movedTile) - solver->goalState.at(state->movedTile));
+		heuristic -= ((current / size) + (current % size));
+		current = abs(state->state.at(state->movedTile) - solver->goalState.at(state->movedTile));
+		heuristic += ((current / size) + (current % size));
+		state->h = heuristic;
+		state->f += heuristic;
+	}
+	
+}
+
+void Puzzle::euclidianHeuristic(State *state)
+{
+	std::cout << state->f << "euclid" << std::endl;
+}
+
+void	Puzzle::hammingHeuristic(State *state)
+{
+	std::cout << state->f << "hamming" << std::endl;
 }
