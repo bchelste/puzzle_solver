@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:34 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/19 18:17:29 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/19 22:10:56 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,16 @@ class Solver
 	private:
 
 		std::priority_queue<State*, std::vector<State*>, CompareStates> opened;
-		std::set<State*> closed;
+		// std::set<State*> closed;
+		std::unordered_set<State*, HashState, HashStateCompare> closed;
 
 		Puzzle					*puzzle;
 		
 		int						nSize;
 		std::map<int, int>		goalState;
 		std::map<int, int>		initialState;
+
+		std::map<char, std::set<int> > extremePos;
 
 		unsigned long			states;
 		// int						moves;
@@ -57,17 +60,20 @@ class Solver
 
 		void					increaseNbr(int *nbr);
 		int						countInversion();
+
+		void					generateExtremePos();
 		
 		bool					isSolvable();
-		
-
-		// State					*generateNewStates(State *parent);
-
-		// void					moveRight(State *state);
-		// void					moveDown(State *state);
-		// void					moveLeft(State *state);
-		// void					moveUp(State *state);
+	
+		State					*moveRight(State *state);
+		State					*moveDown(State *state);
+		State					*moveLeft(State *state);
+		State					*moveUp(State *state);
 
 		bool					isSolved(State *current);
+
+		void					startAstar();
+		void					generateNewStates(State *parent);
+		void					addState(State *newState);
 
 };

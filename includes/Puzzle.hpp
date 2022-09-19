@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 20:19:42 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/19 18:22:11 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/19 22:27:21 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ class Puzzle
 
 		void					parseData(int argc, char **argv);
 		void					solvePuzzle();
+
+		void					printState(std::map<int, int> &state);
 		
 	private:
 
@@ -45,7 +47,6 @@ class Puzzle
 		Parser					parser;
 		Solver					*solver;
 
-		void					printState(std::map<int, int> &state);
 		void					printSolution(std::string sState);
 
 		void					solve();

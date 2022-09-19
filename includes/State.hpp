@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 21:50:15 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/19 18:11:51 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/19 22:12:48 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,38 +28,60 @@ struct State
 	
 };
 
+struct HashState
+{
+	size_t operator() (State *state) const
+	{
+		return (std::hash<State*>()(state));
+	}
+};
+
+struct HashStateCompare
+{
+	bool operator()(State *first, State *second) const
+	{
+		unsigned long i = 0;
+		for(; i < first->state.size(); ++i)
+		{
+			if (first->state.at(i) != second->state.at(i))
+			{
+				return (false);
+			}
+		}
+		return (true);
+	}
+};
+
 struct CompareStates
 {
 	
-	// std::string		heuristic;
 	std::string		search;
 
-	// CompareStates(std::string &initH, std::string initS) : heuristic(initH), search(initS) {}
 	CompareStates() : search("default") {};
 	CompareStates(std::string initS) : search(initS) {}
 	
-	bool 			operator()(State *a, State *b)
+	bool 			operator()(State *first, State *second)
 	{
-		int aValue = 0;
-		int bValue = 0;
+		int firstValue = 0;
+		int secondValue = 0;
 
 		if (search == "greedy")
 		{
-			aValue = a->g;
-			bValue = b->g;
+			firstValue = first->g;
+			secondValue = second->g;
 		}
 		else if (search == "uniform")
 		{
-			aValue = a->h;
-			bValue = b->h;
+			firstValue = first->h;
+			secondValue = second->h;
 		}
 		else // default
 		{
-			aValue = a->f;
-			bValue = b->f;
+			firstValue = first->f;
+			secondValue = second->f;
 		}
 
-		return (aValue > bValue);
+		return (firstValue > secondValue);
 	}
 	
 };

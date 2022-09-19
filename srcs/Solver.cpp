@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/19 18:19:02 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/19 22:41:52 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void Solver::setGoalState()
 		}	
 	}
 	states += 1;
+
+	generateExtremePos();
 	
 }
 
@@ -81,10 +83,12 @@ void Solver::findSolution(void (Puzzle::*heuristic)(State*), std::string &search
 	opened.push(start);
 	
 
-	std::cout << "Hello" << std::endl;
 	
-	std::cout << opened.top()->h << std::endl;
-	std::cout << opened.top()->state.size() << std::endl;
+	// std::cout << opened.top()->h << std::endl;
+	// std::cout << opened.top()->state.size() << std::endl;
+	
+	std::cout << "Hello" << std::endl;
+	startAstar();
 	
 }
 
@@ -129,6 +133,50 @@ int Solver::countInversion()
 	return (missplaced);
 }
 
+void Solver::generateExtremePos()
+{
+	int i;
+	int tmp;
+	std::set<int> positions;
+
+	//move up
+	i = 0;
+	for(;i < nSize; ++i)
+	{
+		positions.emplace(i);
+	}
+	extremePos.emplace('u', positions);
+	positions.clear();
+	
+	// move down
+	i = nSize * (nSize - 1);
+	for(;i < (nSize * nSize); ++i)
+	{
+		positions.emplace(i);
+	}
+	extremePos.emplace('d', positions);
+	positions.clear();
+
+	//move right
+	i = 1;
+	for (;i <= nSize; ++i)
+	{
+		tmp = (nSize * i) - 1;
+		positions.emplace(tmp);
+	}
+	extremePos.emplace('r', positions);
+	positions.clear();
+
+	//move left
+	i = 1;
+	for (; i <= nSize; ++i)
+	{
+		tmp = nSize * (i - 1);
+		positions.emplace(tmp);
+	}
+	extremePos.emplace('l', positions);
+}
+
 bool Solver::isSolvable()
 {
 	int inversions = countInversion();
@@ -166,29 +214,169 @@ bool Solver::isSolvable()
 
 // moves **********************************************************************
 
-// void Solver::moveRight(State *state)
-// {
-// 	std::cout << "move right" << std::endl;
-// }
-
-// void Solver::moveDown(State *state)
-// {
+State *Solver::moveRight(State *state)
+{
+	int pos = state->state.at(0);
+	int swapped;
+	if (extremePos.at('r').find(pos) != extremePos.at('r').end())
+	{
+		return (NULL);
+	}
+	State *newState = new State();
+	newState->father = state;
+	newState->state = state->state;
+	swapped = newState->state.at(pos + 1);
+	newState->state.at(pos + 1) = newState->state.at(pos);
+	newState->state.at(pos) = swapped;
+	newState->movedTile = pos + 1;
+	newState->g = state->g + 1;
+	(puzzle->*heuristicFunc)(newState); // newState-> h and f change
 	
-// }
+	return (newState);
+}
 
-// void Solver::moveLeft(State *state)
-// {
+State *Solver::moveDown(State *state)
+{
+	int pos = state->state.at(0);
+	int swapped;
+	if (extremePos.at('d').find(pos) != extremePos.at('d').end())
+	{
+		return (NULL);
+	}
+	State *newState = new State();
+	newState->father = state;
+	newState->state = state->state;
+	swapped = newState->state.at(pos + nSize);
+	newState->state.at(pos + nSize) = newState->state.at(pos);
+	newState->state.at(pos) = swapped;
+	newState->movedTile = pos + nSize;
+	newState->g = state->g + 1;
+	(puzzle->*heuristicFunc)(newState); // newState-> h and f change
 	
-// }
+	return (newState);
+}
 
-// void Solver::moveUp(State *state)
-// {
+State *Solver::moveLeft(State *state)
+{
+	int pos = state->state.at(0);
+	int swapped;
+	if (extremePos.at('l').find(pos) != extremePos.at('l').end())
+	{
+		return (NULL);
+	}
+	State *newState = new State();
+	newState->father = state;
+	newState->state = state->state;
+	swapped = newState->state.at(pos - 1);
+	newState->state.at(pos - 1) = newState->state.at(pos);
+	newState->state.at(pos) = swapped;
+	newState->movedTile = pos - 1;
+	newState->g = state->g + 1;
+	(puzzle->*heuristicFunc)(newState); // newState-> h and f change
 	
-// }
+	return (newState);
+}
+
+State *Solver::moveUp(State *state)
+{
+	int pos = state->state.at(0);
+	int swapped;
+	if (extremePos.at('u').find(pos) != extremePos.at('u').end())
+	{
+		return (NULL);
+	}
+	State *newState = new State();
+	newState->father = state;
+	newState->state = state->state;
+	swapped = newState->state.at(pos - nSize);
+	newState->state.at(pos - nSize) = newState->state.at(pos);
+	newState->state.at(pos) = swapped;
+	newState->movedTile = pos - nSize;
+	newState->g = state->g + 1;
+	(puzzle->*heuristicFunc)(newState); // newState-> h and f change
+	
+	return (newState);
+}
+
+// A star *********************************************************************
 
 bool Solver::isSolved(State *current)
 {
 	if (current->state == goalState)
 		return (true);
 	return (false);
+}
+
+
+
+void Solver::startAstar()
+{
+	State *current = NULL;
+	
+	while (this->opened.empty() == false)
+	{
+		std::cout << "cicle begin ------" << std::endl;
+		
+		std::cout << "opened size: " << opened.size() << std::endl;
+		
+		current = opened.top();
+		
+		puzzle->printState(current->state);
+		
+		opened.pop();
+		if (isSolved(current) == true)
+		{
+			closed.emplace(current);
+			return ;
+		}
+		else if (closed.find(current) == closed.end())
+		{
+
+			closed.emplace(current);
+			std::cout << "current was emplaced in closed" << std::endl;
+			
+			std::cout << "generate new states" << std::endl;
+			generateNewStates(current);
+			std::cout << "new states were generated" << std::endl;
+
+			
+		}
+		else
+		{
+			delete current;
+		}
+	}
+}
+
+void Solver::generateNewStates(State *parent)
+{
+	State *newState;
+	newState = moveRight(parent);
+	addState(newState);
+
+	newState = moveDown(parent);
+	addState(newState);
+	
+	newState = moveLeft(parent);
+	addState(newState);
+	
+	newState = moveUp(parent);
+	addState(newState);
+
+}
+
+void Solver::addState(State *newState)
+{
+	if (newState != NULL)
+	{
+		if (closed.find(newState) == closed.end())
+		{
+			opened.push(newState);
+		}
+		else
+		{
+			delete newState;
+		}
+		
+	}
 }
