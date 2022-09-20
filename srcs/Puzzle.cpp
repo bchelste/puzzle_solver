@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 20:19:47 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/20 22:33:54 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/20 23:32:04 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,10 +152,19 @@ void Puzzle::printSolution(std::string sStatus)
 	std::cout << "|" << sStatus << "|" << std::endl;
 	
 	State *solution = solver->solution;
+	State tmp;
 	while (solution->father != NULL)
 	{
+		tmp = *solution;
+		std::cout << solution->h << "|" << solution->g << std::endl;
 		result.push_back(solution->state);
 		solution = solution->father;
+		
+		std::cout << "--" << std::endl;
+		tmp.father = NULL;
+		manhattanHeuristic(&tmp);
+		std::cout << tmp.h << std::endl;
+		std::cout << "---------" << std::endl;
 	}
 	std::cout << "____________________________________________________" << std::endl;
 	printState(solver->initialState);
@@ -169,8 +178,9 @@ void Puzzle::printSolution(std::string sStatus)
 	}
 	std::cout << "____________________________________________________" << std::endl;
 	std::cout << "Total steps to solution = " << steps <<std::endl;
+	std::cout << "Time complexity (total states selected for OPENED queue): " << 0 <<std::endl;
+	std::cout << "Size complexity (max number of states in memory at the same time: " << 0 << std::endl;
 
-	
 }
 
 // heuristic funcs ************************************************************

@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/20 22:25:05 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/20 22:47:07 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void Solver::findSolution(void (Puzzle::*heuristic)(State*), std::string &search
 	// std::cout << opened.top()->h << std::endl;
 	// std::cout << opened.top()->state.size() << std::endl;
 	
-	std::cout << "Hello" << std::endl;
+	// std::cout << "Hello" << std::endl;
 	startAstar();
 	
 }
@@ -152,20 +152,20 @@ void Solver::generateExtremePos()
 	std::set<int> positions;
 
 
-	std::cout << "extreme positions: " << std::endl;
-	std::cout << "\nup" << std::endl;
+	// std::cout << "extreme positions: " << std::endl;
+	// std::cout << "\nup" << std::endl;
 	
 	//move up
 	i = 0;
 	for(;i < nSize; ++i)
 	{
 		positions.emplace(i);
-		std::cout << i << " ";
+		// std::cout << i << " ";
 	}
 	extremePos.emplace('u', positions);
 	positions.clear();
 
-	std::cout << "\ndown" << std::endl;
+	// std::cout << "\ndown" << std::endl;
 	
 	// move down
 	i = nSize * (nSize - 1);
@@ -177,7 +177,7 @@ void Solver::generateExtremePos()
 	extremePos.emplace('d', positions);
 	positions.clear();
 
-	std::cout << "\nright" << std::endl;
+	// std::cout << "\nright" << std::endl;
 
 	//move right
 	i = 1;
@@ -185,12 +185,12 @@ void Solver::generateExtremePos()
 	{
 		tmp = (nSize * i) - 1;
 		positions.emplace(tmp);
-		std::cout << tmp << " ";
+		// std::cout << tmp << " ";
 	}
 	extremePos.emplace('r', positions);
 	positions.clear();
 
-	std::cout << "\nleft" << std::endl;
+	// std::cout << "\nleft" << std::endl;
 
 	//move left
 	i = 1;
@@ -198,7 +198,7 @@ void Solver::generateExtremePos()
 	{
 		tmp = nSize * (i - 1);
 		positions.emplace(tmp);
-		std::cout << tmp << " ";
+		// std::cout << tmp << " ";
 	}
 	extremePos.emplace('l', positions);
 }
@@ -399,19 +399,20 @@ void Solver::startAstar()
 	while (this->opened.empty() == false)
 	
 	{
-		std::cout << "cicle begin ------" << std::endl;
+		// std::cout << "cicle begin ------" << std::endl;
 		
 		std::cout << "opened size: " << opened.size() << std::endl;
 		
 		current = opened.top();
-		
-		puzzle->printState(current->state);
-		std::cout << current->movedTile << std::endl;
-		
 		opened.pop();
+		
+		// puzzle->printState(current->state);
+		// std::cout << current->movedTile << std::endl;
+		
+		
 		if (isSolved(current) == true)
 		{
-			std::cout << "puzzle was solved" << std::endl;
+			// std::cout << "puzzle was solved" << std::endl;
 			solution = current;
 			return ;
 		}
@@ -419,11 +420,11 @@ void Solver::startAstar()
 		{
 
 			closed.emplace(current);
-			std::cout << "current was emplaced in closed" << std::endl;
+			// std::cout << "current was emplaced in closed" << std::endl;
 			
-			std::cout << "generate new states" << std::endl;
+			// std::cout << "generate new states" << std::endl;
 			generateNewStates(current);
-			std::cout << "new states were generated" << std::endl;
+			// std::cout << "new states were generated" << std::endl;
 
 			
 		}

@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 21:50:15 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/20 21:56:18 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/20 23:16:26 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@ struct HashState
 {
 	size_t operator() (State *state) const
 	{
-		return (std::hash<State*>()(state));
+		std::string src = "";
+		std::map<int, int>::iterator it = state->state.begin();
+		for (; it != state->state.end(); ++it)
+			src += it->second;
+		return (std::hash<std::string>()(src));
 	}
 };
 
@@ -79,10 +83,7 @@ struct CompareStates
 		}
 		else // default
 		{
-			if (first->g == second->g)
-				return (first->h > second->h);
-			else
-				return (first->g > second->g);
+			return ((first->g + first->h) > (second->g + second->h));
 		}
 
 		return (false);
