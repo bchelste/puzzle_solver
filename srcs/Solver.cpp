@@ -6,13 +6,13 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/20 20:46:22 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/20 22:25:05 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Solver.hpp"
 
-Solver::Solver(Puzzle *_puzzle) : puzzle(_puzzle), nSize(0), states(0), heuristicFunc(NULL)
+Solver::Solver(Puzzle *_puzzle) : puzzle(_puzzle), nSize(0), states(0), solution(NULL), heuristicFunc(NULL)
 {
 	
 }
@@ -269,6 +269,13 @@ State *Solver::moveRight(State *oldState)
 	newState->movedTile = zeroPos + 1;
 	newState->g = oldState->g + 1;
 	(puzzle->*heuristicFunc)(newState); // newState-> h and f change
+
+	
+	// unsigned long i = 0;
+	// for(; i < newState->state.size(); ++i)
+	// {
+	// 	std::cout << i << " " << newState->state.at(i) << " " << newState->reverse.at(i) << std::endl;
+	// }
 	
 	return (newState);
 }
@@ -387,10 +394,10 @@ void Solver::startAstar()
 {
 	State *current = NULL;
 
-	int i = 2;
+	// int i = 2;
+	// while (i != 0)
+	while (this->opened.empty() == false)
 	
-	// while (this->opened.empty() == false)
-	while (i != 0)
 	{
 		std::cout << "cicle begin ------" << std::endl;
 		
@@ -405,7 +412,7 @@ void Solver::startAstar()
 		if (isSolved(current) == true)
 		{
 			std::cout << "puzzle was solved" << std::endl;
-			closed.emplace(current);
+			solution = current;
 			return ;
 		}
 		else if (closed.find(current) == closed.end())
@@ -424,7 +431,7 @@ void Solver::startAstar()
 		{
 			delete current;
 		}
-		--i;
+		// --i;
 	}
 }
 
@@ -452,6 +459,7 @@ void Solver::addState(State *newState)
 		if (closed.find(newState) == closed.end())
 		{
 			opened.push(newState);
+			states += 1;
 		}
 		else
 		{

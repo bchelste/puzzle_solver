@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:34 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/20 20:14:52 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/20 22:16:05 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,9 @@ class Solver
 		std::map<char, std::set<int> > extremePos;
 
 		unsigned long			states;
-		// int						moves;
 
+		State 					*solution;
+		
 		void					(Puzzle::*heuristicFunc)(State*);
 
 		void					increaseNbr(int *nbr);

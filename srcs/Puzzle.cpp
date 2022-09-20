@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 20:19:47 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/19 18:21:41 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/20 22:33:54 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,8 @@ void Puzzle::printState(std::map<int, int> &state)
 
 void Puzzle::printSolution(std::string sStatus)
 {
+	std::vector<std::map<int, int> > result;
+	int steps = 0;
 	std::cout << "----- N-PUZZLE -----" << std::endl;
 	std::cout << "initial State:" << std::endl;
 	printState(solver->initialState);
@@ -147,7 +149,26 @@ void Puzzle::printSolution(std::string sStatus)
 	std::cout << "goal State:" << std::endl;
 	printState(solver->goalState);
 	std::cout << std::endl;
-	std::cout << sStatus << std::endl;
+	std::cout << "|" << sStatus << "|" << std::endl;
+	
+	State *solution = solver->solution;
+	while (solution->father != NULL)
+	{
+		result.push_back(solution->state);
+		solution = solution->father;
+	}
+	std::cout << "____________________________________________________" << std::endl;
+	printState(solver->initialState);
+	std::cout << std::endl;
+	while (result.empty() == false)
+	{
+		printState(*(result.rbegin()));
+		std::cout << std::endl;
+		result.pop_back();
+		++steps;
+	}
+	std::cout << "____________________________________________________" << std::endl;
+	std::cout << "Total steps to solution = " << steps <<std::endl;
 
 	
 }
