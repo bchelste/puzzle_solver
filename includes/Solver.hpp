@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:34 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/19 22:10:56 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/20 20:14:52 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ class Solver
 		void					generateExtremePos();
 		
 		bool					isSolvable();
+
+		std::map<int,int>		setReverseState(std::map<int,int> toRev);
 	
 		State					*moveRight(State *state);
 		State					*moveDown(State *state);

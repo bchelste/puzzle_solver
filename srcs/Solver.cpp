@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/19 22:41:52 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/20 20:46:22 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,17 @@ void Solver::setGoalState()
 	
 }
 
+std::map<int,int> Solver::setReverseState(std::map<int,int> toRev)
+{
+	std::map<int,int> reverse;
+	std::map<int,int>::iterator it = toRev.begin();
+	for (; it != toRev.end(); ++it)
+	{
+		reverse.emplace(it->second, it->first);
+	}
+	return (reverse);
+}
+
 void Solver::findSolution(void (Puzzle::*heuristic)(State*), std::string &search)
 {	
 	CompareStates comp = CompareStates(search);
@@ -75,6 +86,7 @@ void Solver::findSolution(void (Puzzle::*heuristic)(State*), std::string &search
 	closed.clear();
 	State *start = new State();
 	start->state = initialState;
+	start->reverse = setReverseState(start->state);
 	start->father = NULL;
 	start->g = 0;
 	start->h = 0;
@@ -139,23 +151,33 @@ void Solver::generateExtremePos()
 	int tmp;
 	std::set<int> positions;
 
+
+	std::cout << "extreme positions: " << std::endl;
+	std::cout << "\nup" << std::endl;
+	
 	//move up
 	i = 0;
 	for(;i < nSize; ++i)
 	{
 		positions.emplace(i);
+		std::cout << i << " ";
 	}
 	extremePos.emplace('u', positions);
 	positions.clear();
+
+	std::cout << "\ndown" << std::endl;
 	
 	// move down
 	i = nSize * (nSize - 1);
 	for(;i < (nSize * nSize); ++i)
 	{
 		positions.emplace(i);
+		std::cout << i << " ";
 	}
 	extremePos.emplace('d', positions);
 	positions.clear();
+
+	std::cout << "\nright" << std::endl;
 
 	//move right
 	i = 1;
@@ -163,9 +185,12 @@ void Solver::generateExtremePos()
 	{
 		tmp = (nSize * i) - 1;
 		positions.emplace(tmp);
+		std::cout << tmp << " ";
 	}
 	extremePos.emplace('r', positions);
 	positions.clear();
+
+	std::cout << "\nleft" << std::endl;
 
 	//move left
 	i = 1;
@@ -173,6 +198,7 @@ void Solver::generateExtremePos()
 	{
 		tmp = nSize * (i - 1);
 		positions.emplace(tmp);
+		std::cout << tmp << " ";
 	}
 	extremePos.emplace('l', positions);
 }
@@ -214,85 +240,133 @@ bool Solver::isSolvable()
 
 // moves **********************************************************************
 
-State *Solver::moveRight(State *state)
+State *Solver::moveRight(State *oldState)
 {
-	int pos = state->state.at(0);
+	int zeroPos = oldState->state.at(0);
+	int victimValue;
 	int swapped;
-	if (extremePos.at('r').find(pos) != extremePos.at('r').end())
+	
+	if (extremePos.at('r').find(zeroPos) != extremePos.at('r').end())
 	{
 		return (NULL);
 	}
+	
 	State *newState = new State();
-	newState->father = state;
-	newState->state = state->state;
-	swapped = newState->state.at(pos + 1);
-	newState->state.at(pos + 1) = newState->state.at(pos);
-	newState->state.at(pos) = swapped;
-	newState->movedTile = pos + 1;
-	newState->g = state->g + 1;
+	newState->father = oldState;
+	newState->reverse = oldState->reverse;
+	newState->state = oldState->state;
+
+	victimValue = newState->reverse.at(zeroPos + 1);
+
+	swapped = newState->state.at(victimValue);
+	newState->state.at(victimValue) = newState->state.at(0);
+	newState->state.at(0) = swapped;
+
+	swapped = newState->reverse.at(zeroPos);
+	newState->reverse.at(zeroPos) = newState->reverse.at(zeroPos + 1);
+	newState->reverse.at(zeroPos + 1) = swapped;
+	
+	newState->movedTile = zeroPos + 1;
+	newState->g = oldState->g + 1;
 	(puzzle->*heuristicFunc)(newState); // newState-> h and f change
 	
 	return (newState);
 }
 
-State *Solver::moveDown(State *state)
+State *Solver::moveDown(State *oldState)
 {
-	int pos = state->state.at(0);
+	int zeroPos = oldState->state.at(0);
+	int victimValue;
 	int swapped;
-	if (extremePos.at('d').find(pos) != extremePos.at('d').end())
+	
+	if (extremePos.at('d').find(zeroPos) != extremePos.at('d').end())
 	{
 		return (NULL);
 	}
+	
 	State *newState = new State();
-	newState->father = state;
-	newState->state = state->state;
-	swapped = newState->state.at(pos + nSize);
-	newState->state.at(pos + nSize) = newState->state.at(pos);
-	newState->state.at(pos) = swapped;
-	newState->movedTile = pos + nSize;
-	newState->g = state->g + 1;
+	newState->father = oldState;
+	newState->reverse = oldState->reverse;
+	newState->state = oldState->state;
+
+	victimValue = newState->reverse.at(zeroPos + nSize);
+
+	swapped = newState->state.at(victimValue);
+	newState->state.at(victimValue) = newState->state.at(0);
+	newState->state.at(0) = swapped;
+
+	swapped = newState->reverse.at(zeroPos);
+	newState->reverse.at(zeroPos) = newState->reverse.at(zeroPos + nSize);
+	newState->reverse.at(zeroPos + nSize) = swapped;
+	
+	newState->movedTile = zeroPos + nSize;
+	newState->g = oldState->g + 1;
 	(puzzle->*heuristicFunc)(newState); // newState-> h and f change
 	
 	return (newState);
 }
 
-State *Solver::moveLeft(State *state)
+State *Solver::moveLeft(State *oldState)
 {
-	int pos = state->state.at(0);
+	int zeroPos = oldState->state.at(0);
+	int victimValue;
 	int swapped;
-	if (extremePos.at('l').find(pos) != extremePos.at('l').end())
+	
+	if (extremePos.at('l').find(zeroPos) != extremePos.at('l').end())
 	{
 		return (NULL);
 	}
+	
 	State *newState = new State();
-	newState->father = state;
-	newState->state = state->state;
-	swapped = newState->state.at(pos - 1);
-	newState->state.at(pos - 1) = newState->state.at(pos);
-	newState->state.at(pos) = swapped;
-	newState->movedTile = pos - 1;
-	newState->g = state->g + 1;
+	newState->father = oldState;
+	newState->reverse = oldState->reverse;
+	newState->state = oldState->state;
+
+	victimValue = newState->reverse.at(zeroPos - 1);
+
+	swapped = newState->state.at(victimValue);
+	newState->state.at(victimValue) = newState->state.at(0);
+	newState->state.at(0) = swapped;
+
+	swapped = newState->reverse.at(zeroPos);
+	newState->reverse.at(zeroPos) = newState->reverse.at(zeroPos - 1);
+	newState->reverse.at(zeroPos - 1) = swapped;
+	
+	newState->movedTile = zeroPos - 1;
+	newState->g = oldState->g + 1;
 	(puzzle->*heuristicFunc)(newState); // newState-> h and f change
 	
 	return (newState);
 }
 
-State *Solver::moveUp(State *state)
+State *Solver::moveUp(State *oldState)
 {
-	int pos = state->state.at(0);
+	int zeroPos = oldState->state.at(0);
+	int victimValue;
 	int swapped;
-	if (extremePos.at('u').find(pos) != extremePos.at('u').end())
+	
+	if (extremePos.at('u').find(zeroPos) != extremePos.at('u').end())
 	{
 		return (NULL);
 	}
+	
 	State *newState = new State();
-	newState->father = state;
-	newState->state = state->state;
-	swapped = newState->state.at(pos - nSize);
-	newState->state.at(pos - nSize) = newState->state.at(pos);
-	newState->state.at(pos) = swapped;
-	newState->movedTile = pos - nSize;
-	newState->g = state->g + 1;
+	newState->father = oldState;
+	newState->reverse = oldState->reverse;
+	newState->state = oldState->state;
+
+	victimValue = newState->reverse.at(zeroPos - nSize);
+
+	swapped = newState->state.at(victimValue);
+	newState->state.at(victimValue) = newState->state.at(0);
+	newState->state.at(0) = swapped;
+
+	swapped = newState->reverse.at(zeroPos);
+	newState->reverse.at(zeroPos) = newState->reverse.at(zeroPos - nSize);
+	newState->reverse.at(zeroPos - nSize) = swapped;
+	
+	newState->movedTile = zeroPos - nSize;
+	newState->g = oldState->g + 1;
 	(puzzle->*heuristicFunc)(newState); // newState-> h and f change
 	
 	return (newState);
@@ -312,8 +386,11 @@ bool Solver::isSolved(State *current)
 void Solver::startAstar()
 {
 	State *current = NULL;
+
+	int i = 2;
 	
-	while (this->opened.empty() == false)
+	// while (this->opened.empty() == false)
+	while (i != 0)
 	{
 		std::cout << "cicle begin ------" << std::endl;
 		
@@ -322,10 +399,12 @@ void Solver::startAstar()
 		current = opened.top();
 		
 		puzzle->printState(current->state);
+		std::cout << current->movedTile << std::endl;
 		
 		opened.pop();
 		if (isSolved(current) == true)
 		{
+			std::cout << "puzzle was solved" << std::endl;
 			closed.emplace(current);
 			return ;
 		}
@@ -345,6 +424,7 @@ void Solver::startAstar()
 		{
 			delete current;
 		}
+		--i;
 	}
 }
 
