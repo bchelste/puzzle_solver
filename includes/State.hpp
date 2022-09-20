@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 21:50:15 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/20 23:16:26 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/20 23:36:32 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,7 @@ struct CompareStates
 	
 	bool 			operator()(State *first, State *second)
 	{
-		// int firstGValue = 0;
-		// int secondGValue = 0;
-
-		// int firstHValue = 0;
-		// int secondHValue = 0;
-
+		
 		if (search == "uniform")
 		{
 			return (first->g > second->g);
