@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 20:19:47 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/21 22:49:18 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/22 00:01:24 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,15 +158,15 @@ void Puzzle::printSolution(std::string sStatus)
 		while (solution->father != NULL)
 		{
 			tmp = *solution;
-			std::cout << solution->h << "|" << solution->g << std::endl;
+			// std::cout << solution->h << "|" << solution->g << std::endl;
 			result.push_back(solution->state);
 			solution = solution->father;
 		
-			std::cout << "--" << std::endl;
+			// std::cout << "--" << std::endl;
 			tmp.father = NULL;
 			manhattanHeuristic(&tmp);
-			std::cout << tmp.h << std::endl;
-			std::cout << "---------" << std::endl;
+			// std::cout << tmp.h << std::endl;
+			// std::cout << "---------" << std::endl;
 		}
 		std::cout << "____________________________________________________" << std::endl;
 		printState(solver->initialState);
@@ -205,8 +205,8 @@ void Puzzle::printSolution(std::string sStatus)
 	// }
 	std::cout << "____________________________________________________" << std::endl;
 	std::cout << "Total steps to solution = " << steps <<std::endl;
-	std::cout << "Time complexity (total states selected for OPENED queue): " << 0 <<std::endl;
-	std::cout << "Size complexity (max number of states in memory at the same time: " << 0 << std::endl;
+	std::cout << "Time complexity (total states selected for OPENED queue): " << solver->nStates <<std::endl;
+	std::cout << "Size complexity (max number of states in memory at the same time: " << solver->maxNsim << std::endl;
 
 }
 
@@ -239,32 +239,32 @@ void	Puzzle::manhattanHeuristic(State *state)
 	{
 		int tile = 0;
 		heuristic = state->h;
-		std::cout << "heuristic was: " << heuristic <<std::endl;
+		// std::cout << "heuristic was: " << heuristic <<std::endl;
 
-		std::cout << "moved tile: " << state->movedTile << std::endl;
+		// std::cout << "moved tile: " << state->movedTile << std::endl;
 		tile = state->reverse.at(state->movedTile);
-		std::cout << "tile: " << tile << std::endl;
+		// std::cout << "tile: " << tile << std::endl;
 		
-		printState(state->father->state);
-		std::cout << " "<< std::endl;
-		printState(state->state);
-		std::cout << "--------------"<< std::endl;
+		// printState(state->father->state);
+		// std::cout << " "<< std::endl;
+		// printState(state->state);
+		// std::cout << "--------------"<< std::endl;
 		
 		current = abs(state->state.at(0) - solver->goalState.at(tile));
-		std::cout << "current0 = " << current << std::endl;
-		std::cout << (current / size) << "+" << (current % size) << std::endl;
+		// std::cout << "current0 = " << current << std::endl;
+		// std::cout << (current / size) << "+" << (current % size) << std::endl;
 		heuristic -= ((current / size) + (current % size));
-		std::cout << "heuristic - 0: " << heuristic << std::endl;
+		// std::cout << "heuristic - 0: " << heuristic << std::endl;
 	
 		current = abs(state->state.at(tile) - solver->goalState.at(tile));
-		std::cout << "currentpos = " << current << std::endl;
-		std::cout << (current / size) << "+" << (current % size) << std::endl;
+		// std::cout << "currentpos = " << current << std::endl;
+		// std::cout << (current / size) << "+" << (current % size) << std::endl;
 		
 		heuristic += ((current / size) + (current % size));
 		
 		state->h = heuristic;
-		std::cout << "heuristic: " << heuristic <<std::endl;
-		std::cout << "-------next one-------\n"<< std::endl;
+		// std::cout << "heuristic: " << heuristic <<std::endl;
+		// std::cout << "-------next one-------\n"<< std::endl;
 	}
 	
 }

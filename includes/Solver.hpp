@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:34 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/20 22:16:05 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/21 23:57:13 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ class Solver
 
 		std::map<char, std::set<int> > extremePos;
 
-		unsigned long			states;
+		unsigned int			nStates;
+		unsigned int			maxNsim;
 
 		State 					*solution;
 		
@@ -74,6 +75,8 @@ class Solver
 		State					*moveUp(State *state);
 
 		bool					isSolved(State *current);
+
+		void					increaseMaxNSim();
 
 		void					startAstar();
 		void					generateNewStates(State *parent);

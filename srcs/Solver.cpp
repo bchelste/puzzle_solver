@@ -6,13 +6,13 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/21 22:51:17 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/22 00:01:09 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Solver.hpp"
 
-Solver::Solver(Puzzle *_puzzle) : puzzle(_puzzle), nSize(0), states(0), solution(NULL), heuristicFunc(NULL)
+Solver::Solver(Puzzle *_puzzle) : puzzle(_puzzle), nSize(0), nStates(0), maxNsim(0),solution(NULL), heuristicFunc(NULL)
 {
 	
 }
@@ -29,7 +29,7 @@ void Solver::setInitialState(const std::vector<int> &puzzle, const int &size)
 	for (int i = 0; it != puzzle.end(); ++it, ++i)
 		initialState.emplace(*it, i);
 
-	states += 1;
+	nStates += 1;
 	
 }
 
@@ -61,7 +61,7 @@ void Solver::setGoalState()
 			increaseNbr(&nbr);
 		}	
 	}
-	states += 1;
+	nStates += 1;
 
 	generateExtremePos();
 	
@@ -397,11 +397,17 @@ bool Solver::isSolved(State *current)
 	return (false);
 }
 
-
+void Solver::increaseMaxNSim()
+{
+	unsigned int tmp = opened.size() + closed.size();
+	if (tmp > maxNsim)
+		maxNsim = tmp;
+}
 
 void Solver::startAstar()
 {
 	State *current = NULL;
+	maxNsim = 2;
 
 	// int i = 1;
 	// while (i != 0)
@@ -409,7 +415,8 @@ void Solver::startAstar()
 	{
 		// std::cout << "cicle begin ------" << std::endl;
 		
-		std::cout << "opened size: " << opened.size() << std::endl;
+		// std::cout << "opened size: " << opened.size() << std::endl;
+		increaseMaxNSim();
 		
 		current = opened.top();
 		opened.pop();
@@ -472,7 +479,7 @@ void Solver::addState(State *newState)
 		if (closed.find(newState) == closed.end())
 		{
 			opened.push(newState);
-			states += 1;
+			nStates += 1;
 		}
 		else
 		{
