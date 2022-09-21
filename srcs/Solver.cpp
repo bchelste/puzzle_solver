@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/20 22:47:07 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/21 22:51:17 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ void Solver::findSolution(void (Puzzle::*heuristic)(State*), std::string &search
 	start->reverse = setReverseState(start->state);
 	start->father = NULL;
 	start->g = 0;
-	start->h = 0;
 	(puzzle->*heuristicFunc)(start);
+	
 	start->movedTile = -1;
 	opened.push(start);
 	
@@ -172,7 +172,7 @@ void Solver::generateExtremePos()
 	for(;i < (nSize * nSize); ++i)
 	{
 		positions.emplace(i);
-		std::cout << i << " ";
+		// std::cout << i << " ";
 	}
 	extremePos.emplace('d', positions);
 	positions.clear();
@@ -266,9 +266,12 @@ State *Solver::moveRight(State *oldState)
 	newState->reverse.at(zeroPos) = newState->reverse.at(zeroPos + 1);
 	newState->reverse.at(zeroPos + 1) = swapped;
 	
-	newState->movedTile = zeroPos + 1;
+	// newState->movedTile = zeroPos + 1;
+	// newState->f = oldState->f;
+	newState->movedTile = zeroPos;
 	newState->g = oldState->g + 1;
-	(puzzle->*heuristicFunc)(newState); // newState-> h and f change
+	newState->h = oldState->h;
+	(puzzle->*heuristicFunc)(newState); // newState-> h  change
 
 	
 	// unsigned long i = 0;
@@ -306,8 +309,10 @@ State *Solver::moveDown(State *oldState)
 	newState->reverse.at(zeroPos) = newState->reverse.at(zeroPos + nSize);
 	newState->reverse.at(zeroPos + nSize) = swapped;
 	
-	newState->movedTile = zeroPos + nSize;
+	// newState->movedTile = zeroPos + nSize;
+	newState->movedTile = zeroPos;
 	newState->g = oldState->g + 1;
+	newState->h = oldState->h;
 	(puzzle->*heuristicFunc)(newState); // newState-> h and f change
 	
 	return (newState);
@@ -339,8 +344,10 @@ State *Solver::moveLeft(State *oldState)
 	newState->reverse.at(zeroPos) = newState->reverse.at(zeroPos - 1);
 	newState->reverse.at(zeroPos - 1) = swapped;
 	
-	newState->movedTile = zeroPos - 1;
+	// newState->movedTile = zeroPos - 1;
+	newState->movedTile = zeroPos;
 	newState->g = oldState->g + 1;
+	newState->h = oldState->h;
 	(puzzle->*heuristicFunc)(newState); // newState-> h and f change
 	
 	return (newState);
@@ -372,8 +379,10 @@ State *Solver::moveUp(State *oldState)
 	newState->reverse.at(zeroPos) = newState->reverse.at(zeroPos - nSize);
 	newState->reverse.at(zeroPos - nSize) = swapped;
 	
-	newState->movedTile = zeroPos - nSize;
+	// newState->movedTile = zeroPos - nSize;
+	newState->movedTile = zeroPos;
 	newState->g = oldState->g + 1;
+	newState->h = oldState->h;
 	(puzzle->*heuristicFunc)(newState); // newState-> h and f change
 	
 	return (newState);
@@ -394,10 +403,9 @@ void Solver::startAstar()
 {
 	State *current = NULL;
 
-	// int i = 2;
+	// int i = 1;
 	// while (i != 0)
 	while (this->opened.empty() == false)
-	
 	{
 		// std::cout << "cicle begin ------" << std::endl;
 		
@@ -441,15 +449,19 @@ void Solver::generateNewStates(State *parent)
 	State *newState;
 	newState = moveRight(parent);
 	addState(newState);
+	newState = NULL;
 
 	newState = moveDown(parent);
 	addState(newState);
+	newState = NULL;
 	
 	newState = moveLeft(parent);
 	addState(newState);
+	newState = NULL;
 	
 	newState = moveUp(parent);
 	addState(newState);
+	newState = NULL;
 
 }
 

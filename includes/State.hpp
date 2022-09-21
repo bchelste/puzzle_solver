@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 21:50:15 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/20 23:36:32 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/21 22:14:12 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ struct State
 		std::map<int, int>		state;
 		std::map<int, int>		reverse;
 
-		int						f;
 		int						g;
 		int						h;
 
