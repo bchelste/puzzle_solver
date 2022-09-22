@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 20:19:47 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/22 16:28:19 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/22 19:45:15 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,10 +282,118 @@ void	Puzzle::manhattanHeuristic(State *state)
 
 void Puzzle::euclidianHeuristic(State *state)
 {
-	std::cout << state->h << "euclid" << std::endl;
+	int heuristic = 0; 
+	int current = 0;
+	unsigned long i = 1; 
+	unsigned long size = puzzle.getPuzzleSize();
+	if(state->father == NULL)
+	{
+		for (; i < (size * size); ++i)
+		{
+			// std::cout << "i = " << i << std::endl;
+			// std::cout << "current pos = " << state->state.at(i) << std::endl;
+			// std::cout << "goal pos = " << solver->goalState.at(i) << std::endl;
+			current = abs(state->state.at(i) - solver->goalState.at(i));
+			// std::cout << current << std::endl;
+			// std::cout << (current / size) << "+" << (current % size) << std::endl;
+			heuristic += int(std::sqrt(((current / size) * (current / size)) + ((current % size) * (current % size))));
+			// std::cout << "start heuristic: " << heuristic << std::endl;
+			// std::cout << "--------------"<< std::endl;
+			state->h = heuristic;
+			// state->f = heuristic;
+		}
+	}
+	else 
+	{
+		int tile = 0;
+		heuristic = state->h;
+		// std::cout << "heuristic was: " << heuristic <<std::endl;
+
+		// std::cout << "moved tile: " << state->movedTile << std::endl;
+		tile = state->reverse.at(state->movedTile);
+		// std::cout << "tile: " << tile << std::endl;
+		
+		// printState(state->father->state);
+		// std::cout << " "<< std::endl;
+		// printState(state->state);
+		// std::cout << "--------------"<< std::endl;
+		
+		current = abs(state->state.at(0) - solver->goalState.at(tile));
+		// std::cout << "current0 = " << current << std::endl;
+		// std::cout << (current / size) << "+" << (current % size) << std::endl;
+		heuristic -= int(sqrt(((current / size) * (current / size)) + ((current % size) * (current % size))));
+		// std::cout << "heuristic - 0: " << heuristic << std::endl;
+	
+		current = abs(state->state.at(tile) - solver->goalState.at(tile));
+		// std::cout << "currentpos = " << current << std::endl;
+		// std::cout << (current / size) << "+" << (current % size) << std::endl;
+		
+		heuristic += int(sqrt(((current / size) * (current / size)) + ((current % size) * (current % size))));
+		// std::cout << (current / size) << "+" << (current % size) << std::endl;
+		
+
+		state->h = heuristic;
+		// std::cout << "heuristic: " << heuristic <<std::endl;
+		// std::cout << "-------next one-------\n"<< std::endl;
+	}
 }
 
 void	Puzzle::hammingHeuristic(State *state)
 {
-	std::cout << state->h << "hamming" << std::endl;
+	int heuristic = 0; 
+	// int current = 0;
+	unsigned long i = 1; 
+	unsigned long size = puzzle.getPuzzleSize();
+	if(state->father == NULL)
+	{
+		for (; i < (size * size); ++i)
+		{
+			// std::cout << "i = " << i << std::endl;
+			// std::cout << "current pos = " << state->state.at(i) << std::endl;
+			// std::cout << "goal pos = " << solver->goalState.at(i) << std::endl;
+			// current = state->state.at(i) - solver->goalState.at(i);
+			// std::cout << current << std::endl;
+			// std::cout << (current / size) << "+" << (current % size) << std::endl;
+			if (state->state.at(i) != solver->goalState.at(i))
+				heuristic += 1;
+			// std::cout << "start heuristic: " << heuristic << std::endl;
+			// std::cout << "--------------"<< std::endl;
+			state->h = heuristic;
+			// state->f = heuristic;
+		}
+		std::cout << "start heuristic: " << heuristic << std::endl;
+	}
+	else 
+	{
+		int tile = 0;
+		heuristic = state->h;
+		// std::cout << "heuristic was: " << heuristic <<std::endl;
+
+		// std::cout << "moved tile: " << state->movedTile << std::endl;
+		tile = state->reverse.at(state->movedTile);
+		// std::cout << "tile: " << tile << std::endl;
+		
+		// printState(state->father->state);
+		// std::cout << " "<< std::endl;
+		// printState(state->state);
+		// std::cout << "--------------"<< std::endl;
+		
+		if (state->state.at(0) != solver->goalState.at(tile))
+		// std::cout << "current0 = " << current << std::endl;
+		// std::cout << (current / size) << "+" << (current % size) << std::endl;
+			heuristic -= 1;
+		// std::cout << "heuristic - 0: " << heuristic << std::endl;
+	
+		if (state->state.at(tile) != solver->goalState.at(tile))
+		// std::cout << "currentpos = " << current << std::endl;
+		// std::cout << (current / size) << "+" << (current % size) << std::endl;
+		
+			heuristic += 1;
+		// std::cout << (current / size) << "+" << (current % size) << std::endl;
+		
+
+		state->h = heuristic;
+		// std::cout << "heuristic: " << heuristic <<std::endl;
+		// std::cout << "-------next one-------\n"<< std::endl;
+	}
 }
