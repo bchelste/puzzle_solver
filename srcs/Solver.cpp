@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/22 00:01:09 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/22 15:06:33 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void Solver::setInitialState(const std::vector<int> &puzzle, const int &size)
 	for (int i = 0; it != puzzle.end(); ++it, ++i)
 		initialState.emplace(*it, i);
 
-	nStates += 1;
+	// nStates += 1;
+	maxNsim +=1;
 	
 }
 
@@ -61,8 +62,8 @@ void Solver::setGoalState()
 			increaseNbr(&nbr);
 		}	
 	}
-	nStates += 1;
-
+	// nStates += 1;
+	maxNsim += 1;;
 	generateExtremePos();
 	
 }
@@ -93,6 +94,7 @@ void Solver::findSolution(void (Puzzle::*heuristic)(State*), std::string &search
 	
 	start->movedTile = -1;
 	opened.push(start);
+	nStates += 1;
 	
 
 	
@@ -123,7 +125,7 @@ int Solver::countInversion()
 	for(unsigned long i = 1; i < totalSize; ++i)
 	{
 		// std::cout << std::endl;
-		// std::cout << i << "| " << initialState.at(i) << "   " << goalState.at(i) << std::endl;
+		// std::cout << i << "| " << initialState.at(i) << "  ->   " << goalState.at(i) << std::endl;
 		// std::cout << std::endl;
 		for (unsigned long j =  1; j < totalSize; ++j)
 		{
@@ -133,12 +135,11 @@ int Solver::countInversion()
 			
 			if ((initialState[i] < initialState[j]) && (goalState[i] > goalState[j]))
 			{
-				// std::cout << "+" << std::endl;
+				std::cout << "+" << std::endl;
 				missplaced += 1;
 			}
 				
 		}
-		// std::cout << "----------" << std::endl;
 		
 	}
 	
@@ -210,26 +211,28 @@ bool Solver::isSolvable()
 
 	if (nSize % 2 == 1)
 	{
+		// std::cout << "inversions = " << inversions << std::endl;
 		result = inversions % 2 == 0;
 	}
 	else if (nSize % 2 == 0)
 	{
-		int tmp = initialState[0] % nSize;
+		int tmp = initialState[0] / nSize;
+		// std::cout << "inversions = " << inversions << std::endl;
 		// std::cout << "initialState[0] = " << initialState[0] << std::endl;
 		// std::cout << "tmp = " << tmp << std::endl;
-		// std::cout << "inversions = " << inversions << std::endl;
+		// std::cout << "row from bottom = " << (nSize - tmp) << std::endl;
 		// std::cout << "(tmp % 2) = " << (tmp % 2) << std::endl;
 		if ((tmp % 2) == 0)
 		{
-			result = inversions % 2 != 0;
+			result = inversions % 2 == 0;
 		}
 		else
 		{
-			result = inversions % 2 == 0;
+			result = inversions % 2 == 1;
 		}
 		
 	}
-	
+	std::cout << "result: " << result << std::endl; 
 	return (result);
 }
 
@@ -407,7 +410,7 @@ void Solver::increaseMaxNSim()
 void Solver::startAstar()
 {
 	State *current = NULL;
-	maxNsim = 2;
+	// maxNsim = 2;
 
 	// int i = 1;
 	// while (i != 0)
@@ -479,6 +482,8 @@ void Solver::addState(State *newState)
 		if (closed.find(newState) == closed.end())
 		{
 			opened.push(newState);
+			// puzzle->printState(newState->state);
+			// std::cout << std::endl;
 			nStates += 1;
 		}
 		else

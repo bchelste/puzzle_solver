@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 20:19:47 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/22 00:01:24 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/22 15:04:49 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,9 @@ void Puzzle::solve()
 		printSolution("unsolvable");
 		return ;
 	}
+	
+	// printSolution("solvable***");
+	// return ;
 	
 	void (Puzzle::*heuristicFunc)(State *state);
 	if (heuristic == "manhtn")
@@ -207,6 +210,14 @@ void Puzzle::printSolution(std::string sStatus)
 	std::cout << "Total steps to solution = " << steps <<std::endl;
 	std::cout << "Time complexity (total states selected for OPENED queue): " << solver->nStates <<std::endl;
 	std::cout << "Size complexity (max number of states in memory at the same time: " << solver->maxNsim << std::endl;
+	
+	// unsigned long i = 0;
+	// for(; i < solver->opened.size(); ++i)
+	// {
+	// 	std::cout << std::endl;
+	// 	printState(solver->opened.top()->state);
+	// 	std::cout << std::endl;
+	// }
 
 }
 
