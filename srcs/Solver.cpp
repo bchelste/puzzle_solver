@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/22 15:06:33 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:30:23 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int Solver::countInversion()
 			
 			if ((initialState[i] < initialState[j]) && (goalState[i] > goalState[j]))
 			{
-				std::cout << "+" << std::endl;
+				// std::cout << "+" << std::endl;
 				missplaced += 1;
 			}
 				
@@ -232,7 +232,7 @@ bool Solver::isSolvable()
 		}
 		
 	}
-	std::cout << "result: " << result << std::endl; 
+	// std::cout << "result: " << result << std::endl; 
 	return (result);
 }
 
