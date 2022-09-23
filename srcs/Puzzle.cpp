@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 20:19:47 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/22 19:45:15 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/09/22 22:19:47 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -361,7 +361,7 @@ void	Puzzle::hammingHeuristic(State *state)
 			state->h = heuristic;
 			// state->f = heuristic;
 		}
-		std::cout << "start heuristic: " << heuristic << std::endl;
+		// std::cout << "start heuristic: " << heuristic << std::endl;
 	}
 	else 
 	{
