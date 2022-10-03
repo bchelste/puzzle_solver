@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 20:19:47 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/22 22:19:47 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/10/03 16:05:47 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,28 @@ void Puzzle::solvePuzzle()
 	solve();
 }
 
+void Puzzle::clearStates()
+{
+	
+	while (solver->opened.size())
+	{
+		delete solver->opened.top();
+		solver->opened.pop();
+	}
+
+	while (solver->closed.size())
+	{
+		delete (*(solver->closed.begin()));
+		solver->closed.erase(solver->closed.begin());
+	}	
+}
+
 void Puzzle::solve()
 {
 	if (solver->isSolvable() == false)
 	{
 		printSolution("unsolvable");
+		clearStates();
 		return ;
 	}
 	
@@ -96,6 +113,7 @@ void Puzzle::solve()
 		heuristicFunc = &Puzzle::hammingHeuristic;	
 	solver->findSolution(heuristicFunc, search);
 	printSolution("solvable");
+	clearStates();
 }
 
 void Puzzle::printState(std::map<int, int> &state)
@@ -210,7 +228,7 @@ void Puzzle::printSolution(std::string sStatus)
 	std::cout << "Total steps to solution = " << steps <<std::endl;
 	std::cout << "Time complexity (total states selected for OPENED queue): " << solver->nStates <<std::endl;
 	std::cout << "Size complexity (max number of states in memory at the same time: " << solver->maxNsim << std::endl;
-	
+	delete(solver->solution);
 	// unsigned long i = 0;
 	// for(; i < solver->opened.size(); ++i)
 	// {

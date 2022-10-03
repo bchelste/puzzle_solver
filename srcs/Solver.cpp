@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/10/03 13:19:42 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/10/03 15:39:19 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void Solver::setInitialState(const std::vector<int> &puzzle, const int &size)
 	for (int i = 0; it != puzzle.end(); ++it, ++i)
 		initialState.emplace(*it, i);
 
-	// nStates += 1;
+	
 	maxNsim +=1;
 	
 }
@@ -62,7 +62,7 @@ void Solver::setGoalState()
 			increaseNbr(&nbr);
 		}	
 	}
-	// nStates += 1;
+	
 	maxNsim += 1;;
 	generateExtremePos();
 	
