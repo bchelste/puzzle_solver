@@ -6,7 +6,7 @@
 /*   By: bchelste <bchelste@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 21:54:39 by bchelste          #+#    #+#             */
-/*   Updated: 2022/09/22 16:30:23 by bchelste         ###   ########.fr       */
+/*   Updated: 2022/10/03 13:19:42 by bchelste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -443,7 +443,7 @@ void Solver::startAstar()
 			// std::cout << "generate new states" << std::endl;
 			generateNewStates(current);
 			// std::cout << "new states were generated" << std::endl;
-
+			// increaseMaxNSim();
 			
 		}
 		else
@@ -451,6 +451,7 @@ void Solver::startAstar()
 			delete current;
 		}
 		// --i;
+		// increaseMaxNSim();
 	}
 }
 
