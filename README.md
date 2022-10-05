@@ -1,13 +1,16 @@
 # puzzle_solver
 ---
 🧩🧩🧩🧩🧩
+
 ---
 ## This project programmatically solves the puzzles of different sizes
 
 Search algorithm finds a valid sequence of moves in order to reach the
 final state, a.k.a the "snail solution", which depends on the size of the puzzle.
+
 🐌 
 ![Image snail_position](https://github.com/bchelste/puzzle_solver/blob/main/additional/snail_position.png)
+
 ---
 -🔹 A* search algorithm is used
 -🔹 Various puzzle sizes
@@ -17,4 +20,5 @@ final state, a.k.a the "snail solution", which depends on the size of the puzzle
     - euclidian
     - hamming
 -🔹 If puzzle is unsolvable, program detects this and exit
+
 ---
