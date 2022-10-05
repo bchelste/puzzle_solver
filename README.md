@@ -22,3 +22,10 @@ final state, a.k.a the "snail solution", which depends on the size of the puzzle
 - 🔹 If puzzle is unsolvable, program detects this and exit
 
 ---
+
+- make
+- ./n-puzzle args
+    - -n size (3, 4, 5, ...)
+    - -h heuristic (manhtn, euclid, hamm)
+    - -s search (greedy, uniform (for uniform-cost search)
+ - also you can put file with puzzle from generator (make gen3s - for solvable, make gen3u - for unsolvable)
