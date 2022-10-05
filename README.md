@@ -31,5 +31,4 @@ final state, a.k.a the "snail solution", which depends on the size of the puzzle
  - also you can put file with puzzle from generator (make gen3s - for solvable, make gen3u - for unsolvable)
 
 ---
-"open" set is emplemented with std::priority_queue
-"closed" set is emplemented with std::unordered_set
+"open" set is emplemented with std::priority_queue and "closed" set is emplemented with std::unordered_set
